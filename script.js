@@ -18,14 +18,6 @@ const getData = () => {
             </div>`
             let modalDiv = document.createElement('div'); // modal div style=display = none - meaning it is not shown on page
             let phoneNumber = formatNumber(data.results[i].cell);
-            function formatNumber(number) { // formats the nuumber using regex
-              var cleaned = ('' + number).replace(/\D/g, '')
-              var match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/)
-              if (match) {
-                return '(' + match[1] + ') ' + match[2] + '-' + match[3]
-              }
-              return null
-          }
           let date = data.results[i].dob.date; // cycles through the date to find the numbers needed then concatinated them in the required way
           const day1 = date[8]
           const day2 = date[9]
@@ -56,13 +48,15 @@ const getData = () => {
             gallery.appendChild(cardDiv);
             gallery.appendChild(modalDiv);
         }
+        
         for (i = 0; i< 12; i++) { // makes each card clickable and opens the modal container
             const card = document.getElementsByClassName('card')[i];
             const modalDiv = document.getElementsByClassName('modal-container')[i]
             card.addEventListener('click', () => {
             modalDiv.style.display = 'block';
-            })
-          }
+        })
+          
+        }
           for (i = 0; i< 12; i++) { // makes the close button clickable and closes the modal
             const button = document.getElementsByClassName('modal-close-btn')[i];
             button.addEventListener('click', (e) => {
@@ -72,5 +66,15 @@ const getData = () => {
           } 
     xhr.send();
 }
+
+function formatNumber(number) { // formats the number using regex
+  var cleaned = ('' + number).replace(/\D/g, '');
+  var match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
+  if (match) {
+    return '(' + match[1] + ') ' + match[2] + '-' + match[3]
+  } else {
+    return cleaned;
+  }
+}            
 
 getData();
