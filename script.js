@@ -78,7 +78,6 @@ function makeClosable() {
     const button = document.getElementsByClassName('modal-close-btn')[i];
     button.addEventListener('click', (e) => {
         const modalDiv = document.getElementsByClassName('modal-container')[e.target.parentNode.parentNode.id];
-        console.log(modalDiv);
         modalDiv.style.display = 'none';
     })
     }
