@@ -32,7 +32,7 @@ const getData = () => {
           const year = year1 + year2 + year3 + year4;
           const bday = month + "/" + day + "/" + year;
             modalDiv.innerHTML = `<div class="modal-container" id="${i}" style="display:none">
-                        <div class="modal">
+                        <div class="modal" id="${i}">
                             <button id="modal-close-btn" class="modal-close-btn"><strong>X</strong></button>
                             <div class="modal-info-container">
                             <img class="modal-img" src= ${data.results[i].picture.large} alt="profile picture">
@@ -48,21 +48,8 @@ const getData = () => {
             gallery.appendChild(cardDiv);
             gallery.appendChild(modalDiv);
         }
-        
-        for (i = 0; i< 12; i++) { // makes each card clickable and opens the modal container
-            const card = document.getElementsByClassName('card')[i];
-            const modalDiv = document.getElementsByClassName('modal-container')[i]
-            card.addEventListener('click', () => {
-            modalDiv.style.display = 'block';
-        })
-          
-        }
-          for (i = 0; i< 12; i++) { // makes the close button clickable and closes the modal
-            const button = document.getElementsByClassName('modal-close-btn')[i];
-            button.addEventListener('click', (e) => {
-                e.target.parentNode.parentNode.parentNode.style.display = 'none';
-            })
-            }
+        makeClickable();
+        makeClosable();     
           } 
     xhr.send();
 }
@@ -76,5 +63,25 @@ function formatNumber(number) { // formats the number using regex
     return cleaned;
   }
 }            
+
+function makeClickable() {
+  for (i = 0; i< 12; i++) { // makes each card clickable and opens the modal container
+    const card = document.getElementsByClassName('card')[i];
+    const modalDiv = document.getElementsByClassName('modal-container')[i]
+    card.addEventListener('click', () => {
+    modalDiv.style.display = 'block';
+})
+}}
+
+function makeClosable() {
+  for (i = 0; i< 12; i++) { // makes the close button clickable and closes the modal
+    const button = document.getElementsByClassName('modal-close-btn')[i];
+    button.addEventListener('click', (e) => {
+        const modalDiv = document.getElementsByClassName('modal-container')[e.target.parentNode.parentNode.id];
+        console.log(modalDiv);
+        modalDiv.style.display = 'none';
+    })
+    }
+}
 
 getData();
